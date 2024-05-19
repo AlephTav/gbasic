@@ -7,7 +7,7 @@ VARIABLES
 
 S     - determines the size of the square view window (the smaller the more difficult)
 SS    - window size, equals to 2*S+1
-C     - palet number (0-3) for view window
+C     - palette number (0-3) for view window
 WX,WY - coordinates of the top left corner of the view window
 FX,FY - labyrinth frame coordinates
 PX,PY - player coordinates in the maze
