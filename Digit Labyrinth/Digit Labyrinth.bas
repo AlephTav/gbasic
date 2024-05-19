@@ -161,7 +161,7 @@ Labyrinth cleaning:
 455 FOR Y=0 TO 9:FOR X=0 TO 9:B(Y,X)=0:NEXT:NEXT
 460 RETURN
 
-Processing of key pressing:
+Processing of key press:
 -------------------------------------------------------------------
 500 K=ASC(INKEY$)
 505 IF K=78 GOSUB 10:GOTO 550
