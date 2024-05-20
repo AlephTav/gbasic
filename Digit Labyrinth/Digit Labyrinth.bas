@@ -17,9 +17,11 @@ H$,V$ - auxiliary variables
 
 PROGRAM CODE
 
+PALETB 0,30,39,50,60
+
 Initializing variables:
 -------------------------------------------------------------------
-0 CLS:PALETB 0,30,39,50,60:DIM B(9,9),S(3):S=-112
+0 CLS:DIM B(9,9),S(3):G=0
 
 Drawing the game board:
 -------------------------------------------------------------------
@@ -39,17 +41,18 @@ Drawing the game board:
   LOCATE 21,3:PRINT "UP":
   LOCATE 21,4:PRINT "DOWN":
   LOCATE 21,5:PRINT "LEFT":
-  LOCATE 21,6:PRINT "RIGHT":
-  LOCATE 21,8:PRINT "N-NEW":
-  LOCATE 21,9:PRINT "R-RAND":
-  LOCATE 21,10:PRINT "P-SHOW":
-  LOCATE 23,11:PRINT "PATH":
-  GOTO 500
+  LOCATE 21,6:PRINT "RIGHT"
+10 LOCATE 21,8:PRINT "N-NEW":
+   LOCATE 21,9:PRINT "R-RAND":
+   LOCATE 21,10:PRINT "P-SHOW":
+   LOCATE 23,11:PRINT "PATH":
+   LOCATE 21,12:PRINT "S-GO TO":
+   LOCATE 23,13:PRINT "START":
+   GOTO 500
 
 Labyrinth generating:
 -------------------------------------------------------------------
-10 GOSUB 450
-12 SX=RND(10):SY=RND(10):X=SX:Y=SY:SC=RND(11)+10
+12 GOSUB 450:SX=RND(10):SY=RND(10):X=SX:Y=SY:SC=RND(11)+10
 
 Generating of the happy path:
 -----------------------------
@@ -71,7 +74,7 @@ Generating of the happy path:
 36 IF B(Y-S,X)<>0 GOTO 15
 37 S(C)=4:C=C+1
 40 IF C>0 GOTO 45
-41 K=K-1:IF K=0 I=SC:NEXT:GOTO 10
+41 K=K-1:IF K=0 I=SC:NEXT:GOTO 12
 42 GOTO 15
 
 45 IF X+S<=9 B(Y,X+S)=10
@@ -111,7 +114,7 @@ Drawing labyrinth nodes:
 160 FOR Y=0 TO 9:FOR X=0 TO 9:
     LOCATE 2*X+1,2*Y+1:PRINT CHR$(144+ABS(B(Y,X))):
     NEXT:NEXT
-165 X=SX:Y=SY:LOCATE 4,22:PRINT "FIND THE PATH    ":
+165 X=SX:Y=SY:G=1:LOCATE 4,22:PRINT "FIND THE PATH    ":
 170 RETURN
 
 Drawing the path through labyrinth:
@@ -164,8 +167,10 @@ Labyrinth cleaning:
 Processing of key press:
 -------------------------------------------------------------------
 500 K=ASC(INKEY$)
-505 IF K=78 GOSUB 10:GOTO 550
+505 IF K=78 GOSUB 12:GOTO 550
 510 IF K=82 GOSUB 300:GOTO 550
+512 IF G=0 GOTO 500
+515 IF K=83 C=144:GOSUB 605:X=SX:Y=SY:GOTO 550
 520 IF K=80 C=144:GOSUB 605:GOSUB 200:GOTO 550
 525 IF K=28 IF X+S<=9 C=144:GOSUB 605:X=X+S:GOTO 550
 530 IF K=29 IF X-S>=0 C=144:GOSUB 605:X=X-S:GOTO 550
@@ -178,7 +183,7 @@ Processing of key press:
 
 Highlighting available transitions:
 -------------------------------------------------------------------
-605 IF X+S<=9 IF B(Y,X+S)>-55 
+605 IF X+S<=9 IF B(Y,X+S)>-55
     LOCATE 2*(X+S)+1,2*Y+1:PRINT CHR$(C+ABS(B(Y,X+S)))
 610 IF X-S>=0 IF B(Y,X-S)>-55
     LOCATE 2*(X-S)+1,2*Y+1:PRINT CHR$(C+ABS(B(Y,X-S)))
