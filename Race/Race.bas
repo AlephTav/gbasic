@@ -12,17 +12,9 @@ I   - auxiliary variable - counter
 
 PROGRAM CODE
 
-Drawing racecourse and turning on sprite mode:
--------------------------------------------------------------------
-
-10 CLS
-20 SPRITE ON
-30 CGSET1,0
-40 VIEW:LOCATE12,0:PRINT"RACE"
-
 Variables initialization:
 -------------------------------------------------------------------
-45 DIM S(6):W=0
+0 DIM S(6):W=0
 
 Move creation for 7 random sprites:
 -------------------------------------------------------------------
@@ -33,17 +25,20 @@ Move creation for 7 random sprites:
 80 MOVE I
 90 NEXT
 
+Drawing racecourse and turning on sprite mode:
+-------------------------------------------------------------------
+10 CGSET 1,0:VIEW:SPRITE ON:LOCATE 12,0:PRINT"RACE"
+
 Setting the selection flag and processing of keys:
 -------------------------------------------------------------------
 110 LOCATE 27,W*3+1:PRINT CHR$(199)
-130 K=ASC(INKEY$):PAUSE2
-140 IF K=30 GOTO 180
-150 IF K=31 GOTO 180
-160 IF K=32 GOTO 240
+130 K1=STICK(0):K2=STRIG(0)
+140 IF K1=4 OR k1=8 GOTO 180
+160 IF K2<>0 GOTO 240
 170 GOTO 130
 180 LOCATE 27,W*3+1
 190 PRINT " "
-200 W=W+(K-30)*2-1
+200 W=W+3-K1/2
 210 IF W<0 W=6
 220 IF W>6 W=0
 230 GOTO 110
@@ -68,7 +63,7 @@ Victory or defeat:
 320 PRINT "YOU LOSE"
 330 GOTO 350
 340 PRINT "YOU WIN"
-350 IF ASC(INKEY$)<>32 GOTO 350
+350 IF STRIG(0)=0 GOTO 350
 360 LOCATE 10,22
 370 PRINT "        "
 380 GOTO 50
