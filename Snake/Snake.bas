@@ -20,26 +20,31 @@ PROGRAM CODE
 
 Drawing the playing field:
 -------------------------------------------------------------------
-0 CLS:PALETB 0,15,32,36,28
+0 DIM SX(255),SY(255)
+5 CLS:PALETB 0,15,32,36,28
 10 LOCATE 0,0:PRINT CHR$(222):LOCATE 27,20:PRINT CHR$(225)
-20 FOR I=1 TO 26
-30 LOCATE I,0:PRINT CHR$(227)
-40 LOCATE 27-I,20:PRINT CHR$(227)
+20 C$=CHR$(227):FOR I=1 TO 26
+30 LOCATE I,0:PRINT C$
+40 LOCATE 27-I,20:PRINT C$
 50 NEXT
 60 LOCATE 27,0:PRINT CHR$(223):LOCATE 0,20:PRINT CHR$(224)
-70 FOR I=1 TO 19
-80 LOCATE 27,I:PRINT CHR$(226)
-90 LOCATE 0,20-I:PRINT CHR$(226)
+70 C$=CHR$(226):FOR I=1 TO 19
+80 LOCATE 27,I:PRINT C$
+90 LOCATE 0,20-I:PRINT C$
 100 NEXT
-110 LOCATE 1,21:PRINT CHR$(238):LOCATE 26,21:PRINT CHR$(238):
-    LOCATE 13,21:PRINT CHR$(238):LOCATE 14,21:PRINT CHR$(238)
+110 C$=CHR$(238):
+    LOCATE 1,21:PRINT C$:LOCATE 26,21:PRINT C$:
+    LOCATE 13,21:PRINT C$:LOCATE 14,21:PRINT C$
 120 LOCATE 1,22:PRINT CHR$(241):LOCATE 26,22:PRINT CHR$(242):
     LOCATE 13,22:PRINT CHR$(242):LOCATE 14,22:PRINT CHR$(241)
-130 FOR I=2 TO 7
-140 LOCATE I,22:PRINT CHR$(237):LOCATE 27-I,22:PRINT CHR$(237):
-    LOCATE 14-I,22:PRINT CHR$(237):LOCATE 13+I,22:PRINT CHR$(237)
+130 C$=CHR$(237):FOR I=2 TO 7
+140 LOCATE I,22:PRINT C$:LOCATE 27-I,22:PRINT C$:
+    LOCATE 14-I,22:PRINT C$:LOCATE 13+I,22:PRINT C$
 150 NEXT
-160 LOCATE 2,21:PRINT "SCORE:    0":LOCATE 15,21:PRINT "LENGTH:   1"
+160 LOCATE 2,21:PRINT "SCORE:    0":LOCATE 15,21:PRINT "LENGTH:   1":
+    LOCATE 3,10:PRINT "PRESS ANY KEY TO START"
+165 IF STICK(0)=0 IF STRIG(0)=0 GOTO 165
+166 LOCATE 3,10:FOR I=0 TO 21:PRINT " ";:NEXT    
 
 First berries arrangement:
 -------------------------------------------------------------------
@@ -47,9 +52,8 @@ First berries arrangement:
 
 Variables initialization:
 -------------------------------------------------------------------
-700 X=12:Y=9:I=1:J=0:C$=CHR$(207):
-    DIM SX(255),SY(255):SX(0)=X:SY(0)=Y:
-    LI=0:LJ=0:P=0:L=0:SP=4:K=SP
+700 X=12:Y=9:I=1:J=0:C$=CHR$(207):SX(0)=X:SY(0)=Y:
+    LI=0:LJ=0:P=0:L=1:SP=4:K=SP
 
 The main loop of snake move:
 -------------------------------------------------------------------
@@ -71,7 +75,7 @@ The main loop of snake move:
 Processing of key press:
 -------------------------------------------------------------------
 850 M=STICK(0)
-860 IF M=1 J=1:J=0
+860 IF M=1 I=1:J=0
 870 IF M=2 I=-1:J=0
 880 IF M=4 J=1:I=0
 890 IF M=8 J=-1:I=0
@@ -79,12 +83,13 @@ Processing of key press:
 
 Defeat
 -------------------------------------------------------------------
-910 SPRITE ON:CGSET 1,0
+910 CGSET 1,0:SPRITE ON
 920 DEF MOVE(0)=SPRITE(10,0,3,100,0,3)
 930 POSITION 0,8*X+12,8*Y+20:MOVE 0
 940 PLAY "T4O0GFDG":FOR I=0 TO 3:CGSET 0,0:CGSET 1,1:NEXT
-950 PLAY "T8O0ABDECEDDEACFCE"
-1000 SPRITE OFF:END
+950 PLAY "T8O0ABDECEDDEACFCE":SPRITE 0:SPRITE OFF
+960 IF STICK(0)=0 IF STRIG(0)=0 GOTO 960
+970 GOTO 5
 
 Berry placement:
 -------------------------------------------------------------------
