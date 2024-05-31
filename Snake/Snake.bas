@@ -43,7 +43,7 @@ Drawing the playing field:
 150 NEXT
 160 LOCATE 2,21:PRINT "SCORE:    0":LOCATE 15,21:PRINT "LENGTH:   1":
     LOCATE 3,10:PRINT "PRESS ANY KEY TO START"
-165 IF STICK(0)=0 IF STRIG(0)=0 GOTO 165
+165 IF STICK(0)=0 IF STRIG(0)=0 I=RND(9):GOTO 165
 166 LOCATE 3,10:FOR I=0 TO 21:PRINT " ";:NEXT    
 
 First berries arrangement:
@@ -89,7 +89,7 @@ Defeat
 940 PLAY "T4O0GFDG":FOR I=0 TO 3:CGSET 0,0:CGSET 1,1:NEXT
 950 PLAY "T8O0ABDECEDDEACFCE":SPRITE 0:SPRITE OFF
 960 IF STICK(0)=0 IF STRIG(0)=0 GOTO 960
-970 GOTO 5
+970 ERA0:GOTO 5
 
 Berry placement:
 -------------------------------------------------------------------

@@ -35,7 +35,7 @@ Setting the selection flag and processing of keys:
 130 K1=STICK(0):K2=STRIG(0)
 140 IF K1=4 OR k1=8 GOTO 180
 160 IF K2<>0 GOTO 240
-170 GOTO 130
+170 K1=RND(9):GOTO 130
 180 LOCATE 27,W*3+1
 190 PRINT " "
 200 W=W+3-K1/2
