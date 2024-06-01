@@ -10,6 +10,8 @@ D     - game difficulty or ship direction (1 - vertical, 0 - horizontal)
 T     - 0 - player moves, 1 - enemy moves
 X,Y   - player's target coordinates
 M,N,K - pressed key codes
+E$    - symbol of damaged part of a ship
+D$    - symbol of miss mark 
 
 PROGRAM CODE
 
@@ -166,7 +168,10 @@ Player's move:
 Enemy's move:
 --------------
 72 Q=RND(10)+2:W=RND(10)+4:A$=SCR$(Q,W):
-   IF A$=D$ OR A$=E$ GOTO 72
+   IF A$=D$ OR A$=E$
+   OR SCR$(Q-1,W-1)=E$ OR SCR$(Q-1,W+1)=E$ 
+   OR SCR$(Q+1,W-1)=E$ OR SCR$(Q+1,W+1)=E$
+   GOTO 72
 73 IF I>0 IF A$<>C$ I=I-1:GOTO 72
 74 N=8*Q+4:M=8*W+23
 
